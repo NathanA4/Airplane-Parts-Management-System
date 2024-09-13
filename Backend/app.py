@@ -11,7 +11,7 @@ username = os.getenv("USERNAME")
 password = os.getenv("Password")
 database = os.getenv("DB")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@localhost:3000/{database_name}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@localhost:3000/{databasw}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
