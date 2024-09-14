@@ -1,5 +1,6 @@
 from flask_cors import CORS
 from flask import Flask, jsonify, request
+from model import Manufacturer, UserPlane, Engine, LandingGear, FuelSystem, CockpitControls, Avionics, ElectricalSystem, FlightInstruments, Brakes, ExhaustSystem, CoolingSystem, Powerplant
 from flask_sqlalchemy import flask_sqlalchemy
 from dotenv import load_dotenv
 import os
