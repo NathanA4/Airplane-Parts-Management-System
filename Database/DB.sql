@@ -1,3 +1,4 @@
+-- Create the database and tables
 CREATE DATABASE Airplane_System;
 USE Airplane_System;
 CREATE TABLE manufacturer (
@@ -159,6 +160,7 @@ CREATE TABLE powerplant (
     weight INT,
     maintenance_intervals VARCHAR(255)
 );
+-- Junction tables for many-to-many relationships
 CREATE TABLE plane_engine (
     plane_id INT,
     engine_id INT,
