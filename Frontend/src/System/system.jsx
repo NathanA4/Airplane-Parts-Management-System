@@ -26,7 +26,6 @@ import ExhaustSystemImage from '../assets/ExhaustSystem.png'
 import CoolingSystemImage from '../assets/CoolingSystem.png'
 import PowerPlantImage from '../assets/PowerPlant.png'
 import axios from 'axios'; 
-import SharedContext from '../SharedContext.jsx';
 
 const apiRoute = 'http://localhost:5000'; 
 
@@ -63,13 +62,18 @@ function System() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [open, setOpen] = useState(true); 
   const [userData, setUserData] = useState('');
-  const [locationData, setLocationData] = useState({});
 
   const handleSaveFormData = (userData) => {
     if (userData) {
       setUserData(userData);
       setOpen(false);
     }
+  };
+
+  const renderCustomInput = (param, index) => {
+    return(
+      <input type="text" value={param.value} style={{borderColor: param.valid ? 'initial' : 'red'}} onChange={(e) => handleUpdateParameter(index, e.target.value)}/>
+    );
   };
 
   useEffect(() => {
@@ -104,7 +108,7 @@ function System() {
     if (part) {
       category = `physicalModel.${part.name}`;
       imageUrl = part.imageUrl;
-      parameters = parameter.airplanePart.physicalModel[part.name].map(({ name, type }) => ({ name, value: '', type, valid: true }));
+      parameters = parameter.airplanePart.physicalModel[part.name].map(({name, type}) => ({ name, value: '', type, valid: true }));
     }
 
     const newNode = {
@@ -253,6 +257,22 @@ function System() {
           <button className="view-button" onClick={viewPlaneRun}>View AirPlane Body</button>
         </div>
       </div>
+      {contextMenu.visible && (
+        <div
+          className="context-menu"
+          style={{ top: contextMenu.y, left: contextMenu.x }}
+        >
+          <h4>{selectedNode?.data.label} Parameters</h4>
+          {selectedNode && selectedNode.data.parameters && selectedNode.data.parameters.map((param, index) => (
+            <div key={index}>
+              <label>{param.name}: </label>
+              {renderCustomInput(param, index)}
+              {!param.valid && <span className="error-message">Invalid {param.type}</span>}
+            </div>
+          ))}
+          <button onClick={handleCloseContextMenu}>Close</button>
+        </div>
+      )}
     </div>
   );
 }
