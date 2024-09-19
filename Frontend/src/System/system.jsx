@@ -11,9 +11,7 @@ import ReactFlow, {
 import CustomNode from './node.jsx';
 import { parameter } from './partparameter.js';
 import './system.css';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import PlaneImage from '../assets/Plane.png'
 import LandingGearImage from '../assets/LandingGear.png'
 import EngineImage from '../assets/Engine.png';
 import FuelSystemImage from '../assets/FuelSystem.png';

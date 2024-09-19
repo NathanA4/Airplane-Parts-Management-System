@@ -1,6 +1,12 @@
 -- Create the database and tables
 CREATE DATABASE Airplane_System;
 USE Airplane_System;
+CREATE TABLE userid(
+    id INt PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    profile VARCHAR(255)
+);
 CREATE TABLE manufacturer (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255)
@@ -32,7 +38,7 @@ CREATE TABLE landing_gear (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tire_type VARCHAR(255),
     material VARCHAR(255),
-    shock_absorption VARCHAR(255),
+    7 shock_absorption VARCHAR(255),
     tire_pressure INT,
     retraction_system VARCHAR(255),
     braking_system VARCHAR(255),
