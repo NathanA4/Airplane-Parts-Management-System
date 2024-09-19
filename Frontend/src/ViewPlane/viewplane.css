@@ -1,3 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+.canvas-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+}
+
 canvas {
     height: 100vh;
+    width: 50vw;
+}
+
+.plane1 {
+    background: linear-gradient(135deg, #5e6c85 0%, #141517 100%);
+}
+
+.plane2 {
+    background: linear-gradient(135deg, #616655 0%, #141517 100%);
+}
+
+.choose-button {
+    padding: 10px 20px;
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px;
+    transition: background-color 0.3s;
+    position: absolute;
+    bottom: 20px;
+    left: 50%; 
+    transform: translateX(-50%);
+}
+
+.choose-button1 {
+    background-color: #5e6c85; 
+}
+
+.choose-button2 {
+    background-color: #616655; 
+}
+
+.choose-button1:hover {
+    background-color: #bdbec2;
+}
+
+.choose-button2:hover {
+    background-color: #a7a8a7;
 }

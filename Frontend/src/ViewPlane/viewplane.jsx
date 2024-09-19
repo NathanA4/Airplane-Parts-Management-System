@@ -1,25 +1,45 @@
-import React from "react";
+import React, { useState, Suspense } from "react";
 import { Canvas } from '@react-three/fiber';
-import { useState, Suspense } from "react";
 import { Environment, OrbitControls } from '@react-three/drei';
-import Model from '../../public/Cirrussr22'
-import './viewplane.css'
+import Model from '../../public/Cirrussr22'; 
+import Plane from "../../public/Lowpoly";
+import './viewplane.css';
 
-function plane() {
-    const [count, setCount] = useState(0)
+function PlaneView() {
+    const [selectedModel, setSelectedModel] = useState(null);
 
-    return(
-        <>
-         <Canvas>
-            <ambientLight intensity={0.2}/>
-            <OrbitControls />
-            <Suspense fallback={null}>
-                <Model/>
-            </Suspense>
-            <Environment preset="sunset"/>
-         </Canvas>
-        </>
-    )
+    const handleChooseClick = (modelType) => {
+        setSelectedModel(modelType);
+        alert(`You have chosen the ${modelType}!`);
+    };
+
+    return (
+        <div className="canvas-container">
+            <div style={{ position: 'relative' }}>
+                <Canvas className="plane1" camera={{ position: [15, 6, 15], fov: 60 }}>
+                    <ambientLight intensity={0.2} />
+                    <OrbitControls minDistance={3} maxDistance={30} />
+                    <Suspense fallback={null}>
+                        <Model />
+                    </Suspense>
+                    <Environment preset="forest" />
+                </Canvas>
+                <button className="choose-button choose-button1" onClick={() => handleChooseClick('Model')}>Choose Model 1</button>
+            </div>
+
+            <div style={{ position: 'relative' }}>
+                <Canvas className="plane2" camera={{ position: [15, 6, 15], fov: 65 }}>
+                    <ambientLight intensity={0} />
+                    <OrbitControls minDistance={150} maxDistance={200} />
+                    <Suspense fallback={null}>
+                        <Plane />
+                    </Suspense>
+                    <Environment preset="sunset" />
+                </Canvas>
+                <button className="choose-button choose-button2" onClick={() => handleChooseClick('Plane')}>Choose Model 2</button>
+            </div>
+        </div>
+    );
 }
 
-export default plane;
+export default PlaneView;
