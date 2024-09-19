@@ -68,6 +68,10 @@ function System() {
     }
   };
 
+  const viewPlane = () => {
+    navigate('/viewplane');
+  };
+
   const renderCustomInput = (param, index) => {
     return(
       <input type="text" value={param.value} style={{borderColor: param.valid ? 'initial' : 'red'}} onChange={(e) => handleUpdateParameter(index, e.target.value)}/>
@@ -209,10 +213,6 @@ function System() {
       });
   };
 
-  const viewPlaneRun = () => {
-    saveModel();
-    navigate('/vpm');
-  };
 
   return (
     <div className="dndflow">
@@ -252,7 +252,7 @@ function System() {
 
         <div className="flex space-x-4 mt-4">
           <button className="save-button" onClick={saveModel}>Save Model</button>
-          <button className="view-button" onClick={viewPlaneRun}>View AirPlane Body</button>
+          <button className="view-button" onClick={viewPlane}>View AirPlane Body</button>
         </div>
       </div>
       {contextMenu.visible && (

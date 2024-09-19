@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import System from './System/system';
 import Login from './login/login';
 import Register from './login/register';
+import ViewPlane from './ViewPlane/viewplane';
 import './index.css';
 
 createRoot(document.getElementById('root')).render(
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/' element={<Register/>}/>
             <Route path='Login' element={<Login/>}/>
             <Route path='systems' element={<System />} />
+            <Route path='viewplane' element={<ViewPlane/>}/>
           </Routes>
       </Router>
     </DndProvider>

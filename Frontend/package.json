@@ -13,6 +13,8 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@react-three/drei": "^9.112.0",
+    "@react-three/fiber": "^8.17.7",
     "@xyflow/react": "^12.3.0",
     "axios": "^1.7.7",
     "d3": "^7.9.0",
@@ -24,7 +26,8 @@
     "react-flow-renderer": "^10.3.17",
     "react-router-dom": "^6.26.2",
     "reactflow": "^11.11.4",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "three": "^0.168.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
