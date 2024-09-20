@@ -37,16 +37,6 @@ const Login = () => {
 
     return (
         <div>
-            <header className="header">
-                <div className="container">
-                    <Link to="/login">
-                        <button className="button">Login</button>
-                    </Link>
-                    <Link to="/">
-                        <button className="button primary">Register</button>
-                    </Link>
-                </div>
-            </header>
             <div className="min-h-screen">
                 <div className="form-container">
                     <h2 className="title">Login</h2>

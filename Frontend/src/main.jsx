@@ -7,7 +7,7 @@ import System from './System/system';
 import Login from './login/login';
 import Register from './login/register';
 import ViewPlane from './ViewPlane/viewplane';
-import Home from './Home/home';
+import Home from './Home/manu';
 import './index.css';
 
 createRoot(document.getElementById('root')).render(
