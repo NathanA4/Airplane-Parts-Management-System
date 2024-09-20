@@ -1,5 +1,6 @@
 import React, { useState, Suspense } from "react";
 import { Canvas } from '@react-three/fiber';
+import { useNavigate } from 'react-router-dom';
 import { Environment, OrbitControls } from '@react-three/drei';
 import Model from '../../public/Cirrussr22'; 
 import Plane from "../../public/Lowpoly";
@@ -7,11 +8,11 @@ import './viewplane.css';
 
 function PlaneView() {
     const [selectedModel, setSelectedModel] = useState(null);
+    const navigate = useNavigate();
 
-    const handleChooseClick = (modelType) => {
-        setSelectedModel(modelType);
-        alert(`You have chosen the ${modelType}!`);
-    };
+    const  modelSelected = () => {
+        navigate('/');
+      };
 
     return (
         <div className="canvas-container">
@@ -24,7 +25,7 @@ function PlaneView() {
                     </Suspense>
                     <Environment preset="forest" />
                 </Canvas>
-                <button className="choose-button choose-button1" onClick={() => handleChooseClick('Model')}>Choose Model 1</button>
+                <button className="choose-button choose-button1" onClick={modelSelected}>Choose Model 1</button>
             </div>
 
             <div style={{ position: 'relative' }}>
@@ -36,7 +37,7 @@ function PlaneView() {
                     </Suspense>
                     <Environment preset="sunset" />
                 </Canvas>
-                <button className="choose-button choose-button2" onClick={() => handleChooseClick('Plane')}>Choose Model 2</button>
+                <button className="choose-button choose-button2" onClick={modelSelected}>Choose Model 2</button>
             </div>
         </div>
     );

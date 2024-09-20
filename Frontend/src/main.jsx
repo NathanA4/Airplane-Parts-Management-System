@@ -7,6 +7,7 @@ import System from './System/system';
 import Login from './login/login';
 import Register from './login/register';
 import ViewPlane from './ViewPlane/viewplane';
+import Home from './Home/home';
 import './index.css';
 
 createRoot(document.getElementById('root')).render(
@@ -14,10 +15,11 @@ createRoot(document.getElementById('root')).render(
     <DndProvider backend={HTML5Backend}>
       <Router>
           <Routes>
-            <Route path='/' element={<Register/>}/>
+            <Route path='/' element={<Home/>}/>
+            <Route path='register' element={<Register/>}/>
             <Route path='Login' element={<Login/>}/>
             <Route path='systems' element={<System />} />
-            <Route path='viewplane' element={<ViewPlane/>}/>
+            <Route path='viewplane' element={<ViewPlane/>}/> 
           </Routes>
       </Router>
     </DndProvider>

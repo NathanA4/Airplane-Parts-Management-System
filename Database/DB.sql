@@ -1,11 +1,11 @@
--- Create the database and tables
 CREATE DATABASE Airplane_System;
 USE Airplane_System;
 CREATE TABLE userid(
     id INt PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
     email VARCHAR(255),
-    profile VARCHAR(255)
+    profile VARCHAR(255),
+    password VARCHAR(255)
 );
 CREATE TABLE manufacturer (
     id INT PRIMARY KEY AUTO_INCREMENT,
