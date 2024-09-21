@@ -53,3 +53,23 @@ canvas {
 .choose-button2:hover {
     background-color: #a7a8a7;
 }
+
+.choose-main{
+    padding: 10px 20px;
+    color: rgb(61, 56, 56); 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px;
+    transition: background-color 0.3s;
+    position: absolute;
+    bottom: 840px;
+    left: 6%; 
+    transform: translateX(-50%);
+    background-color: #c8ccdf;
+}
+
+.choose-main:hover {
+    background-color: #a7a8a7;
+}
+

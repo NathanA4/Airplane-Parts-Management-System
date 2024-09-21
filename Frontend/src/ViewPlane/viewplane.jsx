@@ -11,8 +11,11 @@ function PlaneView() {
     const navigate = useNavigate();
 
     const  modelSelected = () => {
-        navigate('/');
-      };
+        alert("Model Desgin Saved")
+    };
+    const backToSystems = () => {
+        navigate('/systems')
+    }
 
     return (
         <div className="canvas-container">
@@ -25,6 +28,7 @@ function PlaneView() {
                     </Suspense>
                     <Environment preset="forest" />
                 </Canvas>
+                <button className="choose-main" onClick={backToSystems}>Back</button>
                 <button className="choose-button choose-button1" onClick={modelSelected}>Choose Model 1</button>
             </div>
 

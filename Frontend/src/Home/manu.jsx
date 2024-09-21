@@ -19,12 +19,11 @@ function Home() {
 
     const handleRetrieve = () => {
         alert("Retrieving data...");
-        // Add your data retrieval logic here
     };
 
     return (
         <div className="home-container">
-            <h1 className="home-title">Retrieving Data</h1>
+            <h1 className="home-title">Manufacter System</h1>
             
             <p className="home-description">
                 Under this section, you can upload a file or retrieve data.

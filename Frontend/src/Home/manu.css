@@ -30,7 +30,9 @@
     margin-left: -30px;
 
 }
-
+.home-description{
+    padding-left: 15px;
+}
 .custom-file-input {
     position: relative;
     width: 100%;

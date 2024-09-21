@@ -249,8 +249,20 @@ function System() {
             <Background />
           </ReactFlow>
         </div>
-
-        <div className="flex space-x-4 mt-4">
+        <div className="section">
+          <span className="text">!</span>
+          <div className="popup">
+            <p>Tips:</p>
+            <ul>
+              <li>Drag and drop airplane parts from the sidebar onto the main content area.</li>
+              <li>Right-click a part to input parameters.</li>
+              <li>Connect parts by dragging a line between them.</li>
+              <li>Save your model.</li>
+              <li>After saving the model, you can choose the airplane model/design.</li>
+            </ul>
+          </div>
+        </div>
+        <div className="">
           <button className="save-button" onClick={saveModel}>Save Model</button>
           <button className="view-button" onClick={viewPlane}>View AirPlane Body</button>
         </div>

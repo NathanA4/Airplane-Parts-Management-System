@@ -9,16 +9,33 @@
 }
 
 .mini-map-black {
-  background-color: #4d4747; 
+  background-color: #606060; 
 }
 
 .sidebar {
   width: 300px;
   padding: 20px;
-  background: #a3a1a1;
+  background: #606060;
   height:850px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
+}
+.sidebar::-webkit-scrollbar {
+  width: 15px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #808080; 
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0; 
 }
 
 .main-content {
@@ -38,7 +55,7 @@
   color: #c9cacc;
   background-color: #858080;
   border-radius: 4px;
-  box-shadow: -10px 9px 5px rgb(255, 255, 255);
+  box-shadow: -5px 5px 5px rgb(255, 255, 255);
   display: inline-block;
 
 }
@@ -53,9 +70,9 @@
   padding-right: 10px;
   padding-bottom: 15px;
   color: #c9cacc;
-  background-color: #5f5454;
+  background-color: #858080;
   border-radius: 4px;
-  box-shadow: -10px 9px 5px rgb(255, 255, 255);
+  box-shadow: -5px 5px 5px rgb(255, 255, 255);
   display: inline-block;
 }
 
@@ -69,8 +86,8 @@
 }
 
 .reactflow-wrapper {
-  height: 75vh;
-  border: 1px solid #e0e7ff;
+  height: 73vh;
+  border: 1px solid #606060;
   border-radius: 10px;
   background: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -102,7 +119,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(40%, -40%);
   background: #ffffff;
   border: 1px solid #ddd;
   padding: 25px;
@@ -142,7 +159,7 @@
 .context-menu button {
   margin-top: 20px;
   padding: 12px 25px;
-  background-color: #007bff;
+  background-color: #383750;
   color: white;
   border: none;
   border-radius: 8px;
@@ -152,7 +169,7 @@
 }
 
 .context-menu button:hover {
-  background-color: #0056b3;
+  background-color: #83838b;
 }
 
 .custom-node {
@@ -172,7 +189,7 @@
 
 .main-content {
   padding: 25px;
-  background: linear-gradient(135deg, #a3a1a1, #f4f4f4);
+  background: linear-gradient(135deg, #606060, #f4f4f4);
   
 }
 
@@ -210,4 +227,77 @@
 
 .save-button:hover {
   background-color: #434e5a;
+}
+
+.section {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #434e5a;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.text:hover {
+  background-color: #606060;
+  transform: scale(1.1);
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  z-index: 1000;
+  width: 220px;
+  transition: opacity 0.3s ease;
+}
+
+.section:hover .popup {
+  display: block;
+  opacity: 1;
+}
+
+.popup p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.popup ul {
+  padding-left: 20px;
+  margin-top: 10px;
+  list-style-type: disc;
+}
+
+.popup li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.popup li::marker {
+  color: #606060;
 }
