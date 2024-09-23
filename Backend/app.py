@@ -3,6 +3,8 @@ from flask import Flask, jsonify, request
 from model import db, User, Manufacturer, UserPlane, Engine, LandingGear, FuelSystem, CockpitControls, Avionics, ElectricalSystem, FlightInstruments, Brakes, ExhaustSystem, CoolingSystem, Powerplant
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from datetime import datetime, timedelta
+import uuid
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -35,7 +37,6 @@ def register():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
@@ -50,6 +51,7 @@ def login():
 
     return jsonify({
         "username": user.name,
+        "role": user.profile 
     })
 
 if __name__ == '__main__':

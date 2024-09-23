@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
-import './Login.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login = () => {
     const [username, setUsernameOrEmail] = useState('');
@@ -27,8 +27,14 @@ const Login = () => {
             });
 
             console.log('Login successful:', response.data);
-            localStorage.setItem('userId', response.data.userID);
-            navigate('/systems');
+            
+            localStorage.setItem('username', response.data.username);
+            
+            if (response.data.role === 'user') {
+                navigate('/systems');
+            } else if (response.data.role === 'manufacturer') {
+                navigate('/');
+            }
         } catch (error) {
             console.error('Login error:', error.response ? error.response.data : error.message);
             setErrorMessage('Invalid username or password');
