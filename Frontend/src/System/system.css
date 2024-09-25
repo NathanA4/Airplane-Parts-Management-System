@@ -1,6 +1,18 @@
 *{
   font-family: 'Courier New', Courier, monospace;
 }
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #808080;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+}
 .dndflow {
   display: flex;
   height: 100vh;
@@ -20,8 +32,9 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
+
 .sidebar::-webkit-scrollbar {
-  width: 15px;
+  width: 10px;
 }
 
 .sidebar::-webkit-scrollbar-track {

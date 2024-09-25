@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import './manu.css'; 
+import axios from "axios";
+import './manu.css';
 
 function Home() {
     const [file, setFile] = useState(null);
+    const [imageUrls, setImageUrls] = useState({});
 
     const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
+        const selectedFile = e.target.files[0];
+        if (selectedFile && selectedFile.type === "text/csv") {
+            setFile(selectedFile);
+        } else {
+            alert("Please upload a valid .csv file!");
+            setFile(null);
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (file) {
-            alert(`File ${file.name} uploaded successfully!`);
+            uploadFile(file, "Manufacter Tool", "location");
         } else {
-            alert("Please select a file first!");
+            alert("Please select a .csv file first!");
         }
     };
 
@@ -21,10 +29,30 @@ function Home() {
         alert("Retrieving data...");
     };
 
+    const uploadFile = (file, tool, location) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('location', location);
+    
+        axios
+            .post('http://localhost:5000/file_upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then((response) => {
+                console.log('File upload response:', response);
+                alert(`File ${file.name} uploaded successfully!`);
+            })
+            .catch((error) => {
+                console.error('Error uploading file:', error.response || error.message);
+                alert('File upload failed.');
+            });
+    };
+
     return (
         <div className="home-container">
             <h1 className="home-title">Manufacter System</h1>
-            
             <p className="home-description">
                 Under this section, you can upload a file or retrieve data.
             </p>
@@ -36,14 +64,19 @@ function Home() {
                     <input 
                         type="file" 
                         id="file" 
-                        className="file-input" 
+                        className="file-input"
+                        accept=".csv"
                         onChange={handleFileChange}
                     />
                     <label htmlFor="file" className="file-label">
-                        {file ? file.name : "Choose File"}
+                        {file ? file.name : "Choose .csv File"}
                     </label>
                 </div>
-                <button type="submit" className="upload-button">
+                <button 
+                    type="submit" 
+                    className="upload-button" 
+                    disabled={!file}
+                >
                     Upload
                 </button>
             </form>

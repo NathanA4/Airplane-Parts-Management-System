@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
 import uuid
+import pandas as pd
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -53,6 +54,35 @@ def login():
         "username": user.name,
         "role": user.profile 
     })
+
+@app.route('/file_upload', methods=['POST'])
+def file_upload():
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part in the request'}), 400
+
+        file = request.files['file']
+
+        if file.filename == '':
+            return jsonify({'error': 'No selected file'}), 400
+
+        if not file.filename.endswith('.csv'):
+            return jsonify({'error': 'File is not a CSV'}), 400
+
+        print(f"Received file: {file.filename}")
+
+        try:
+            df = pd.read_csv(file)
+            data_preview = df.head().to_json(orient="records")
+            return jsonify({'message': 'File uploaded successfully', 'preview': data_preview}), 200
+
+        except Exception as e:
+            print(f"Error processing file: {str(e)}")
+            return jsonify({'error': f'Failed to process file: {str(e)}'}), 500
+
+    except Exception as e:
+        print(f"Error during upload: {str(e)}")
+        return jsonify({'error': f'Unexpected error: {str(e)}'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
