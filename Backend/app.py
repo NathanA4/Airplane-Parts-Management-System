@@ -54,7 +54,7 @@ def login():
         "username": user.name,
         "role": user.profile 
     })
-
+#Display .csv file
 @app.route('/file_upload', methods=['POST'])
 def file_upload():
     try:
@@ -83,6 +83,9 @@ def file_upload():
     except Exception as e:
         print(f"Error during upload: {str(e)}")
         return jsonify({'error': f'Unexpected error: {str(e)}'}), 500
+
+#@app.route('/save', methods=['GET'])
+#def save():
 
 if __name__ == '__main__':
     app.run(debug=True)

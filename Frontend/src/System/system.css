@@ -117,8 +117,8 @@
 }
 
 .dndnode:hover {
-  background-color: #f0f8ff;
-  border-color: #d8d8d8;
+  background-color: #9c9c9c;
+  border-color: #94989b;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }

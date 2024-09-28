@@ -204,7 +204,7 @@ function System() {
     setSharedData({ nodes: serializedData.nodes, edges: serializedData.edges, userData});
 
     axios
-      .post(`${apiRoute}/api/savemodel`, { ...serializedData, userData, userID: localStorage.getItem('userId') }) 
+      .post(`${apiRoute}/api/save`, { ...serializedData, userData, userID: localStorage.getItem('userId') }) 
       .then((response) => {
         console.log('Response from server:', response.data);
       })
