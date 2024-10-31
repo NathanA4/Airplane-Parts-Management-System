@@ -75,7 +75,7 @@ function Home() {
                         type="file" 
                         id="file" 
                         className="file-input"
-                        accept=".csv"
+                        accept=".csv, .xlsx"
                         onChange={handleFileChange}
                     />
                     <label htmlFor="file" className="file-label">

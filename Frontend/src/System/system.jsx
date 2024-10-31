@@ -24,6 +24,7 @@ import ExhaustSystemImage from '../assets/ExhaustSystem.png'
 import CoolingSystemImage from '../assets/CoolingSystem.png'
 import PowerPlantImage from '../assets/PowerPlant.png'
 import axios from 'axios'; 
+import SharedContext from '../SharedContext.jsx';
 
 const apiRoute = 'http://localhost:5000'; 
 
@@ -60,6 +61,8 @@ function System() {
   const [selectedNode, setSelectedNode] = useState(null);
   const [open, setOpen] = useState(true); 
   const [userData, setUserData] = useState('');
+
+  const { setSharedData } = useContext(SharedContext);
 
   const handleSaveFormData = (userData) => {
     if (userData) {
@@ -204,7 +207,7 @@ function System() {
     setSharedData({ nodes: serializedData.nodes, edges: serializedData.edges, userData});
 
     axios
-      .post(`${apiRoute}/api/save`, { ...serializedData, userData, userID: localStorage.getItem('userId') }) 
+      .post(`${apiRoute}/api/save_plane`, { ...serializedData, userData, userID: localStorage.getItem('userID') }) 
       .then((response) => {
         console.log('Response from server:', response.data);
       })

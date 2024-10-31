@@ -61,6 +61,7 @@
 .h1 {
   font-size: 2.5em;
   font-weight: bold;
+  margin-top: 10px;
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
@@ -77,6 +78,7 @@
   font-size: 1.4em;
   font-weight: bold;
   margin-top: 10px;
+  margin-bottom: 50px;
   margin-left: 50px;
   padding-top: 10px;
   padding-left: 10px;
@@ -107,11 +109,10 @@
 }
 
 .dndnode {
-  margin-bottom: 15px;
-  padding: 12px;
-  border: 2px solid #ddd;
+  margin-bottom: 18px;
+  padding: 15px;
   border-radius: 8px;
-  background: #fff;
+  background: #c5c3c3;
   cursor: grab;
   transition: all 0.3s ease;
 }
@@ -120,7 +121,7 @@
   background-color: #9c9c9c;
   border-color: #94989b;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .dndnode .parts{ 
@@ -208,7 +209,7 @@
 
 .save-button {
     padding: 12px 25px;
-    background-color: #94989b;
+    background-color: #6d7072;
     color: white;
     border: none;
     border-radius: 8px;
@@ -218,7 +219,7 @@
 }
 .view-button {
     padding: 12px 25px;
-    background-color: #94989b;
+    background-color: #6d7072;
     color: white;
     border: none;
     border-radius: 8px;

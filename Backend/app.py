@@ -1,6 +1,6 @@
 from flask_cors import CORS
 from flask import Flask, jsonify, request
-from model import db, User, Manufacturer, UserPlane, Engine, LandingGear, FuelSystem, CockpitControls, Avionics, ElectricalSystem, FlightInstruments, Brakes, ExhaustSystem, CoolingSystem, Powerplant
+from model import db, User, Engine, LandingGear, FuelSystem, CockpitControl, Avionic, ElectricalSystem, FlightInstrument, Brake, ExhaustSystem, CoolingSystem, Powerplant
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from datetime import datetime, timedelta
@@ -29,7 +29,7 @@ def register():
     role = data.get('role')
 
     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
-    new_user = User(name=username, email=email, profile=role, password=hashed_password)
+    new_user = Users(name=username, email=email, profile=role, password=hashed_password)
 
     db.session.add(new_user)
     db.session.commit()
@@ -42,7 +42,7 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-    user = User.query.filter_by(name=username).first()
+    user = Users.query.filter_by(name=username).first()
 
     if user is None:
         return jsonify({"Error": "Unauthorized User"}), 401
@@ -84,8 +84,56 @@ def file_upload():
         print(f"Error during upload: {str(e)}")
         return jsonify({'error': f'Unexpected error: {str(e)}'}), 500
 
-#@app.route('/save', methods=['GET'])
-#def save():
+Airplane_System = []
+
+def get_parameter_value(params, key):
+    """Utility function to fetch parameter value or return None."""
+    return next((param['value'] for param in params if param['name'] == key), None)
+
+@app.route('/api/save_plane', methods=['POST'])
+def save_plane():
+    global Airplane_System
+    Airplane_System.clear()  # Clear previous entries
+
+    data = request.get_json()
+
+    if data is None:
+        return jsonify({"error": "Invalid JSON"}), 400
+    if 'nodes' not in data or 'edges' not in data:
+        return jsonify({"error": "Missing nodes or edges"}), 400
+
+    nodes = data['nodes']
+    edges = data['edges']
+    user_data = data.get('userData', {})
+    user_id = data.get('userID')
+    model_id = data.get('modelID')
+    for node in nodes:
+        node_type = node['type']
+        params = node['parameters']
+
+            # Example for handling Engine type node
+        if node_type == 'physicalModel.Engine' and node['name'] == 'Engine':
+           engine = Engine(
+                engine_type=get_parameter_value(params, 'Engine Type'),
+                horsepower=int(get_parameter_value(params, 'Horsepower') or 0),
+                rpm=int(get_parameter_value(params, 'RPM') or 0),
+                displacement=float(get_parameter_value(params, 'Displacement') or 0.0),
+                fuel_type=get_parameter_value(params, 'Fuel Type (AVGAS)'),
+                fuel_consumption=float(get_parameter_value(params, 'Fuel Consumption (GPH)') or 0.0),
+                compression_ratio=float(get_parameter_value(params, 'Compression Ratio') or 0.0),
+                torque=int(get_parameter_value(params, 'Torque (lb-ft)') or 0),
+                egt=int(get_parameter_value(params, 'Exhaust Gas Temperature (EGT)') or 0),
+                cht=int(get_parameter_value(params, 'Cylinder Head Temperature (CHT)') or 0),
+                oil_pressure=int(get_parameter_value(params, 'Oil Pressure (PSI)') or 0),
+                oil_temperature=int(get_parameter_value(params, 'Oil Temperature (°F)') or 0),
+                model_id=model_id  
+            )
+      
+        db.session.add(engine)
+        Airplane_System.append(node['name']) 
+
+        db.session.commit()
+        return jsonify({"status": "Plane model saved successfully"}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
