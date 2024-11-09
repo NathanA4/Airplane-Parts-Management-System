@@ -39,26 +39,15 @@ export const parameter = {
                 { name: 'Fuel Venting System', type: 'string' }
             ],
             CockpitControls: [
-                { name: 'Control Column', type: 'string' },
-                { name: 'Throttle Control', type: 'string' },
-                { name: 'Mixture Control', type: 'string' },
-                { name: 'Flaps Control', type: 'string' },
-                { name: 'Trim Control', type: 'string' },
+                { name: 'Control Yoke/stick', type: 'string' },
+                { name: 'Throttle', type: 'string' },
                 { name: 'Rudder Pedals', type: 'string' },
-                { name: 'Landing Gear Control', type: 'string' },
-                { name: 'Brakes', type: 'string' },
-                { name: 'Avionics Master Switch', type: 'string' },
-                { name: 'Autopilot Control', type: 'string' },
-                { name: 'Flight Instruments', type: 'array' },
-                { name: 'Communication Radio', type: 'string' },
-                { name: 'Navigation Radio', type: 'string' },
-                { name: 'Transponder', type: 'string' },
-                { name: 'Fuel Gauge', type: 'string' },
-                { name: 'Altimeter', type: 'string' },
-                { name: 'Airspeed Indicator', type: 'string' },
-                { name: 'Attitude Indicator', type: 'string' },
-                { name: 'Heading Indicator', type: 'string' },
-                { name: 'Vertical Speed Indicator', type: 'string' }
+                { name: 'Trim Controls', type: 'string' },
+                { name: 'Flap Controls', type: 'string' },
+                { name: 'Autopilot', type: 'string' },
+                { name: 'Landing Gear Controls', type: 'string' },
+                { name: 'Radio Panel', type: 'string' },
+                { name: 'Instrument Panel', type: 'string' }
             ],
             Avionics: [
                 { name: 'GPS System', type: 'string' },
@@ -73,10 +62,6 @@ export const parameter = {
                 { name: 'Autopilot System', type: 'string' },
                 { name: 'Flight Director', type: 'string' },
                 { name: 'TCAS (Traffic Collision Avoidance System)', type: 'string' },
-                { name: 'Glass Cockpit Display', type: 'string' },
-                { name: 'MFD (Multi-Function Display)', type: 'string' },
-                { name: 'PFD (Primary Flight Display)', type: 'string' },
-                { name: 'Audio Panel', type: 'string' },
                 { name: 'Transponder Modes', type: 'string' }
             ],
             ElectricalSystem: [
@@ -94,13 +79,11 @@ export const parameter = {
                 { name: 'Avionics Power Supply', type: 'string' },
                 { name: 'Battery Type', type: 'string' },
                 { name: 'Backup Battery', type: 'string' },
-                { name: 'Bus Voltage Monitoring', type: 'string' },
                 { name: 'Electrical Fault Monitoring', type: 'string' }
             ],
             FlightInstruments: [
                 { name: 'Altimeter', type: 'string' },
                 { name: 'Airspeed Indicator', type: 'string' }, 
-                { name: 'Attitude Indicator', type: 'string' }, 
                 { name: 'Heading Indicator', type: 'string' }, 
                 { name: 'Vertical Speed Indicator', type: 'string' }, 
                 { name: 'Turn Coordinator', type: 'string' }, 
@@ -139,7 +122,6 @@ export const parameter = {
                 { name: 'Emission Control', type: 'string' }
             ],
             CoolingSystem: [
-                { name: 'Cooling Type', type: 'string' },
                 { name: 'Coolant Type', type: 'string' },
                 { name: 'Radiator Size (inches)', type: 'int' },
                 { name: 'Cooling Fan', type: 'string' },

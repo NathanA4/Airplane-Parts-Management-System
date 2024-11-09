@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
 const Register = () => {
@@ -8,11 +8,13 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setErrors({}); // Reset errors before new request
+
         try {
             const response = await axios.post('http://localhost:5000/api/register', {
                 username,
@@ -24,8 +26,27 @@ const Register = () => {
             console.log('Response from server:', response.data);
             navigate('/login');
         } catch (error) {
-            console.error('Error sending data to server:', error.response ? error.response.data : error.message);
-            setErrorMessage('Registration failed. Please try again.');
+            if (error.response) {
+                console.error('Error from server:', error.response.data);
+                const serverErrors = error.response.data;
+
+                // Set specific field errors based on response
+                if (error.response.status === 400) {
+                    setErrors({ general: 'Please fill in all required fields.' });
+                } else if (error.response.status === 409) {
+                    if (serverErrors.error.includes('username')) {
+                        setErrors(prevErrors => ({ ...prevErrors, username: 'Username is already taken.' }));
+                    }
+                    if (serverErrors.error.includes('email')) {
+                        setErrors(prevErrors => ({ ...prevErrors, email: 'Email is already registered.' }));
+                    }
+                } else {
+                    setErrors({ general: 'Registration failed. Please try again.' });
+                }
+            } else {
+                console.error('Error sending data to server:', error.message);
+                setErrors({ general: 'Unable to connect to the server. Please try again later.' });
+            }
         }
     };
 
@@ -45,6 +66,7 @@ const Register = () => {
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
+                            {errors.username && <p className="error-message">{errors.username}</p>}
                         </div>
                         <div className="input-group">
                             <label htmlFor="email" className="sr-only">Email</label>
@@ -56,6 +78,7 @@ const Register = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
+                            {errors.email && <p className="error-message">{errors.email}</p>}
                         </div>
                         <div className="input-group">
                             <label htmlFor="password" className="sr-only">Password</label>
@@ -89,7 +112,7 @@ const Register = () => {
                             Register
                         </button>
                     </form>
-                    {errorMessage && <p className="error-message">{errorMessage}</p>}
+                    {errors.general && <p className="error-message">{errors.general}</p>}
                 </div>
             </div>
         </div>

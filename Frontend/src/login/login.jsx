@@ -33,7 +33,7 @@ const Login = () => {
             if (response.data.role === 'user') {
                 navigate('/systems');
             } else if (response.data.role === 'manufacturer') {
-                navigate('/');
+                navigate('/manufacturer');
             }
         } catch (error) {
             console.error('Login error:', error.response ? error.response.data : error.message);

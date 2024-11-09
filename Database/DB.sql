@@ -7,14 +7,12 @@ CREATE TABLE Users (
     profile VARCHAR(255),
     password VARCHAR(255) NOT NULL
 );
--- AirplaneModels table
 CREATE TABLE AirplaneModels (
     model_id INT PRIMARY KEY AUTO_INCREMENT,
     model_name VARCHAR(255) NOT NULL,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
--- Engine table with specific parameters
 CREATE TABLE engine (
     id INT PRIMARY KEY AUTO_INCREMENT,
     engine_type VARCHAR(255),
@@ -32,7 +30,6 @@ CREATE TABLE engine (
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Landing Gear table with specific parameters
 CREATE TABLE landing_gear (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tire_type VARCHAR(255),
@@ -41,28 +38,27 @@ CREATE TABLE landing_gear (
     tire_pressure INT,
     retraction_system VARCHAR(255),
     braking_system VARCHAR(255),
-    track_width INT,
-    tire_size INT,
+    track_width FLOAT,
+    tire_size FLOAT,
     weight_capacity INT,
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Fuel System table with specific parameters
 CREATE TABLE fuel_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    fuel_type VARCHAR(255),
     fuel_tank_capacity FLOAT,
-    fuel_pump_type VARCHAR(255),
-    fuel_filter VARCHAR(255),
-    fuel_lines VARCHAR(255),
-    fuel_management VARCHAR(255),
-    fuel_gauges VARCHAR(255),
-    fuel_flow_rate FLOAT,
+    fuel_type VARCHAR(255),
+    fuel_delivery_system VARCHAR(255),
     fuel_pressure INT,
+    fuel_pump VARCHAR(255),
+    fuel_lines VARCHAR(255),
+    fuel_filter VARCHAR(255),
+    fuel_value VARCHAR(255),
+    fuel_flow FLOAT,
+    fuel_venting_system VARCHAR(255),
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Cockpit Controls table with specific parameters
 CREATE TABLE cockpit_controls (
     id INT PRIMARY KEY AUTO_INCREMENT,
     control_yoke_stick VARCHAR(255),
@@ -70,56 +66,70 @@ CREATE TABLE cockpit_controls (
     rudder_pedals VARCHAR(255),
     trim_controls VARCHAR(255),
     flap_controls VARCHAR(255),
-    autopilot VARCHAR(255),
+    autopilots VARCHAR(255),
     landing_gear_controls VARCHAR(255),
     radio_panel VARCHAR(255),
     instrument_panel VARCHAR(255),
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Avionics table with specific parameters
 CREATE TABLE avionics (
     id INT PRIMARY KEY AUTO_INCREMENT,
     gps VARCHAR(255),
     nav_com_radios VARCHAR(255),
+    adf VARCHAR(255),
+    vor VARCHAR(255),
+    dme VARCHAR(255),
     transponder VARCHAR(255),
+    elt VARCHAR(255),
+    ads_b VARCHAR(255),
     weather_radar VARCHAR(255),
-    autopilot VARCHAR(255),
-    electronic_flight_display VARCHAR(255),
-    engine_monitoring VARCHAR(255),
-    flight_management_system VARCHAR(255),
-    collision_avoidance_system VARCHAR(255),
+    autopilot_system VARCHAR(255),
+    flight_director VARCHAR(255),
+    tcas VARCHAR(255),
+    transponder_mode VARCHAR(255),
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Electrical System table with specific parameters
 CREATE TABLE electrical_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    battery_type VARCHAR(255),
-    battery_capacity FLOAT,
-    alternator_generator VARCHAR(255),
+    battery_capacity INT,
+    alternator_rating_amps INT,
+    system_voltage INT,
+    wiring_type VARCHAR(255),
     circuit_breakers VARCHAR(255),
-    electrical_bus VARCHAR(255),
-    lighting_system VARCHAR(255),
-    electrical_wiring VARCHAR(255),
-    avionics_power_supply VARCHAR(255),
-    electrical_load VARCHAR(255),
+    electrical_buses VARCHAR(255),
+    master_switch VARCHAR(255),
+    generator_output_amps INT,
+    inverters VARCHAR(255),
+    power_outlets VARCHAR(255),
+    light_system VARCHAR(255),
+    aps VARCHAR(255),
+    battery_type VARCHAR(255),
+    backup_battery VARCHAR(255),
+    electrical_monitoring VARCHAR(255),
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Flight Instruments table with specific parameters
 CREATE TABLE flight_instruments (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    airspeed_indicator VARCHAR(255),
     altimeter VARCHAR(255),
-    attitude_indicator VARCHAR(255),
+    airspeed_indicator VARCHAR(255),
     heading_indicator VARCHAR(255),
     vertical_speed_indicator VARCHAR(255),
     turn_coordinator VARCHAR(255),
+    gyro_horizon VARCHAR(255),
+    compass VARCHAR(255),
+    tachometer VARCHAR(255),
+    fuel_gauge VARCHAR(255),
+    oil_pressure_gauge VARCHAR(255),
+    oil_temperature_gauge VARCHAR(255),
+    manifold_pressure_gauge VARCHAR(255),
+    engine_temperature_gauge VARCHAR(255),
+    vacuum_gauge VARCHAR(255),
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Brakes table with specific parameters
 CREATE TABLE brakes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     brake_type VARCHAR(255),
@@ -135,7 +145,6 @@ CREATE TABLE brakes (
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Exhaust System table with specific parameters
 CREATE TABLE exhaust_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
     exhaust_type VARCHAR(255),
@@ -151,10 +160,8 @@ CREATE TABLE exhaust_system (
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Cooling System table with specific parameters
 CREATE TABLE cooling_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    cooling_type VARCHAR(255),
     coolant_type VARCHAR(255),
     radiator_size INT,
     cooling_fan VARCHAR(255),
@@ -170,7 +177,6 @@ CREATE TABLE cooling_system (
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
 );
--- Powerplant table with specific parameters
 CREATE TABLE powerplant (
     id INT PRIMARY KEY AUTO_INCREMENT,
     engine_type VARCHAR(255),
@@ -188,8 +194,8 @@ CREATE TABLE powerplant (
     exhaust_system VARCHAR(255),
     oil_system VARCHAR(255),
     power_output FLOAT,
-    operating_temperature INT,
-    weight INT,
+    operating_temp INT,
+    weights INT,
     maintenance_intervals VARCHAR(255),
     model_id INT,
     FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
