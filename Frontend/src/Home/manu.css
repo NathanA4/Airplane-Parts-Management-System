@@ -2,20 +2,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 80vh;
+    justify-content: flex-start;;
     background-color: #f7f7f7;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     padding: 40px;
     width: 100%;
-    max-width: 800px; 
+    max-width: 900px;
     margin: 0 auto;
     border: 1px solid #dcdcdc;
+    overflow: auto;
 }
 
 .home-title {
-    font-size: 32px; 
+    font-size: 32px;
     color: #4a4a4a;
     margin-bottom: 24px;
     font-weight: bold;
@@ -25,7 +25,7 @@
 .upload-form {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     width: 100%;
 }
 
@@ -78,11 +78,11 @@
     padding: 14px 24px;
     border: none;
     border-radius: 6px;
-    margin-left: 0; 
+    margin-left: 0;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%; 
+    width: 100%;
     margin-right: 10px;
     max-width: 200px;
     text-align: center;
@@ -102,13 +102,12 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%; 
-    max-width: 200px; 
+    width: 100%;
+    max-width: 200px;
     text-align: center;
     align-self: center;
     margin-bottom: 20px;
 }
-
 
 .preview-scroll {
     max-height: 300px;
@@ -122,7 +121,7 @@
 .preview-table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; 
+    table-layout: fixed;
 }
 
 .preview-table th, .preview-table td {
@@ -160,18 +159,18 @@
     padding: 12px 0px;
     border: none;
     border-radius: 6px;
-    margin-left: 0; 
+    margin-left: 0;
     margin-top: 10px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%; 
+    width: 100%;
     margin-right: 10px;
     max-width: 150px;
     text-align: center;
 }
 
-.button-data:hover{
+.button-data:hover {
     background-color: #a0a0a0;
 }
 
@@ -209,4 +208,67 @@
     right: 15px;
     font-size: 20px;
     cursor: pointer;
+}
+
+.modal-input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.retrieved-data-container {
+    margin-top: 5px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.retrieved-data-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #4a4a4a;
+    margin-bottom: 10px;
+}
+
+.retrieved-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 0 auto;
+}
+
+.retrieved-data-table th, .retrieved-data-table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 13px;
+    border: 1px solid #4a4a4a;
+    word-wrap: break-word;
+}
+
+.retrieved-data-table th {
+    background-color: #606060;
+    color: white;
+    font-size: 14px;
+}
+
+.retrieved-data-table td {
+    background-color: #f9f9f9;
+    color: #4a4a4a;
+}
+
+.delete-button {
+    padding: 10px 10px;
+    background-color: #695c5c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 9px 2px; 
+}
+.delete-button-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px; 
 }

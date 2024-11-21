@@ -13,12 +13,11 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        setErrors({}); // Reset errors before new request
+        setErrors({});
 
         try {
             const response = await axios.post('http://localhost:5000/api/register', {
                 username,
-                email,
                 password,
                 role,
             });
@@ -30,7 +29,6 @@ const Register = () => {
                 console.error('Error from server:', error.response.data);
                 const serverErrors = error.response.data;
 
-                // Set specific field errors based on response
                 if (error.response.status === 400) {
                     setErrors({ general: 'Please fill in all required fields.' });
                 } else if (error.response.status === 409) {
@@ -67,18 +65,6 @@ const Register = () => {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                             {errors.username && <p className="error-message">{errors.username}</p>}
-                        </div>
-                        <div className="input-group">
-                            <label htmlFor="email" className="sr-only">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                className="input"
-                                placeholder="Ex: nathaniel.Kebere@airplanesystems.ca"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            {errors.email && <p className="error-message">{errors.email}</p>}
                         </div>
                         <div className="input-group">
                             <label htmlFor="password" className="sr-only">Password</label>

@@ -28,16 +28,15 @@ def register():
             return jsonify({"error": "No input data provided"}), 400
 
         username = data.get('username')
-        email = data.get('email')
         password = data.get('password')
         role = data.get('role')
 
-        if not all([username, email, password, role]):
+        if not all([username, password, role]):
             return jsonify({"error": "Missing required fields"}), 400
 
         hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
 
-        new_user = User(name=username, email=email, profile=role, password=hashed_password)
+        new_user = User(name=username, profile=role, password=hashed_password)
 
         db.session.add(new_user)
         db.session.commit()
@@ -66,6 +65,7 @@ def login():
         return jsonify({"Error": "Unauthorized User"}), 401
 
     return jsonify({
+        "userId": user.id,
         "username": user.name,
         "role": user.profile 
     })
@@ -121,7 +121,6 @@ def save_plane():
     edges = data['edges']
     user_data = data.get('userData', {})
     user_id = data.get('userID')
-    model_id = data.get('modelID')
 
     for node in nodes:
         node_type = node['type']
@@ -141,10 +140,11 @@ def save_plane():
                 cht=int(get_parameter_value(params, 'Cylinder Head Temperature (CHT)') or 0),
                 oil_pressure=int(get_parameter_value(params, 'Oil Pressure (PSI)') or 0),
                 oil_temperature=int(get_parameter_value(params, 'Oil Temperature (°F)') or 0),
-                model_id=model_id  
+                user_id=user_id
             )
             db.session.add(engine)
             Airplane_System.append(node['name'])
+            print(f"Engine saved with user_id: {engine.user_id}")
 
         elif node_type == 'physicalModel.LandingGear' and node['name'] == 'LandingGear':
             landing_gear = LandingGear(
@@ -157,7 +157,7 @@ def save_plane():
                 track_width=float(get_parameter_value(params, 'Track Width (ft)') or 0.0),
                 tire_size=float(get_parameter_value(params, 'Tire Size (in)') or 0.0),
                 weight_capacity=int(get_parameter_value(params, 'Weight Capacity (lbs)') or 0),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(landing_gear)
             Airplane_System.append(node['name'])
@@ -174,7 +174,7 @@ def save_plane():
                 fuel_value=get_parameter_value(params, 'Fuel Selector Valve'),
                 fuel_flow=float(get_parameter_value(params, 'Fuel Flow Indicator (GPH)') or 0.0),
                 fuel_venting_system = get_parameter_value(params, 'Fuel Venting System'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(fuel_system)
             Airplane_System.append(node['name'])
@@ -190,7 +190,7 @@ def save_plane():
                 landing_gear_controls=get_parameter_value(params, 'Landing Gear Controls'),
                 radio_panel=get_parameter_value(params, 'Radio Panel'),
                 instrument_panel=get_parameter_value(params, 'Instrument Panel'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(cockpit_control)
             Airplane_System.append(node['name'])
@@ -210,7 +210,7 @@ def save_plane():
                 flight_director=get_parameter_value(params, 'Flight Director'),
                 tcas=get_parameter_value(params, 'TCAS (Traffic Collision Avoidance System)'),
                 transponder_mode=get_parameter_value(params, 'Transponder Modes'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(avionic)
             Airplane_System.append(node['name'])
@@ -232,7 +232,7 @@ def save_plane():
                 battery_type=get_parameter_value(params, 'Battery Type'),
                 backup_battery=get_parameter_value(params, 'Backup Battery'),
                 electrical_monitoring=get_parameter_value(params, 'Electrical Fault Monitoring'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(electrical_system)
             Airplane_System.append(node['name'])
@@ -253,7 +253,7 @@ def save_plane():
                 manifold_pressure_gauge = get_parameter_value(params, 'Manifold Pressure Gauge'),
                 engine_temperature_gauge = get_parameter_value(params, 'Engine Temperature Gauge'),
                 vacuum_gauge = get_parameter_value(params, 'Vacuum Gauge'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(flight_instrument)
             Airplane_System.append(node['name'])
@@ -270,7 +270,7 @@ def save_plane():
                 brake_lines=get_parameter_value(params, 'Brake Lines'),
                 brake_pads=get_parameter_value(params, 'Brake Pads'),
                 brake_fluid=get_parameter_value(params, 'Brake Fluid Type'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(brake)
             Airplane_System.append(node['name'])
@@ -287,7 +287,7 @@ def save_plane():
                 exhaust_system_pressure=int(get_parameter_value(params, 'Exhaust System Pressure (PSI)') or 0),
                 exhaust_system_mounting=get_parameter_value(params, 'Exhaust System Mounting'),
                 emission_control=get_parameter_value(params, 'Emission Control'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(exhaust_system)
             Airplane_System.append(node['name'])
@@ -306,7 +306,7 @@ def save_plane():
                 airflow_management=get_parameter_value(params, 'Airflow Management'),
                 cooling_fins=get_parameter_value(params, 'Cooling Fins'),
                 cooling_system_mounting=get_parameter_value(params, 'Cooling System Mounting'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(cooling_system)
             Airplane_System.append(node['name'])
@@ -331,13 +331,55 @@ def save_plane():
                 operating_temp=int(get_parameter_value(params, 'Operating Temperature (°C)') or 0),
                 weights=int(get_parameter_value(params, 'Weight (lbs)') or 0),
                 maintenance_intervals=get_parameter_value(params, 'Maintenance Intervals'),
-                model_id=model_id
+                user_id=user_id
             )
             db.session.add(powerplant)
             Airplane_System.append(node['name'])
 
     db.session.commit()
     return jsonify({"status": "Plane model saved successfully"}), 201
+
+@app.route('/api/retrieve_plane', methods=['GET'])
+def retrieve_plane():
+    try:
+        user_id = request.args.get('userID') 
+
+        if not user_id:
+            return jsonify({"error": "User ID is required"}), 400
+
+        engine = Engine.query.filter_by(user_id=user_id).all()
+        landing_gear = LandingGear.query.filter_by(user_id=user_id).all()
+        fuel_system = FuelSystem.query.filter_by(user_id=user_id).all()
+        cockpit_control = CockpitControl.query.filter_by(user_id=user_id).all()
+        avionics = Avionic.query.filter_by(user_id=user_id).all()
+        electrical_system = ElectricalSystem.query.filter_by(user_id=user_id).all()
+        flight_instruments = FlightInstrument.query.filter_by(user_id=user_id).all()
+        brakes = Brake.query.filter_by(user_id=user_id).all()
+        exhaust_systems = ExhaustSystem.query.filter_by(user_id=user_id).all()
+        cooling_systems = CoolingSystem.query.filter_by(user_id=user_id).all()
+        powerplant = Powerplant.query.filter_by(user_id=user_id).all()
+
+        airplane_data = {
+            "Engine": [engine_item.to_dict() for engine_item in engine],
+            "LandingGear": [landing_gear_item.to_dict() for landing_gear_item in landing_gear],
+            "FuelSystem": [fuel_system_item.to_dict() for fuel_system_item in fuel_system],
+            "CockpitControl": [cockpit_control_item.to_dict() for cockpit_control_item in cockpit_control],
+            "Avionic": [avionics_item.to_dict() for avionics_item in avionics],
+            "ElectricalSystem": [electrical_item.to_dict() for electrical_item in electrical_system],
+            "FlightInstruments": [instrument_item.to_dict() for instrument_item in flight_instruments],
+            "Brakes": [brake_item.to_dict() for brake_item in brakes],
+            "ExhaustSystems": [exhaust_item.to_dict() for exhaust_item in exhaust_systems],
+            "CoolingSystems": [cooling_item.to_dict() for cooling_item in cooling_systems],
+            "Powerplant": [powerplant_item.to_dict() for powerplant_item in powerplant],
+        }
+
+        return jsonify(airplane_data), 200
+
+    except Exception as e:
+        print(f"Error retrieving airplane data: {str(e)}")
+        return jsonify({'error': f'Failed to retrieve airplane data: {str(e)}'}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

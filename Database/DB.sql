@@ -3,15 +3,8 @@ USE Airplane_System;
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
     profile VARCHAR(255),
     password VARCHAR(255) NOT NULL
-);
-CREATE TABLE AirplaneModels (
-    model_id INT PRIMARY KEY AUTO_INCREMENT,
-    model_name VARCHAR(255) NOT NULL,
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
 CREATE TABLE engine (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -27,8 +20,8 @@ CREATE TABLE engine (
     cht INT,
     oil_pressure INT,
     oil_temperature INT,
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE landing_gear (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -41,8 +34,8 @@ CREATE TABLE landing_gear (
     track_width FLOAT,
     tire_size FLOAT,
     weight_capacity INT,
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE fuel_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -56,8 +49,8 @@ CREATE TABLE fuel_system (
     fuel_value VARCHAR(255),
     fuel_flow FLOAT,
     fuel_venting_system VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE cockpit_controls (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -70,8 +63,8 @@ CREATE TABLE cockpit_controls (
     landing_gear_controls VARCHAR(255),
     radio_panel VARCHAR(255),
     instrument_panel VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE avionics (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -88,8 +81,8 @@ CREATE TABLE avionics (
     flight_director VARCHAR(255),
     tcas VARCHAR(255),
     transponder_mode VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE electrical_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -108,8 +101,8 @@ CREATE TABLE electrical_system (
     battery_type VARCHAR(255),
     backup_battery VARCHAR(255),
     electrical_monitoring VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE flight_instruments (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -127,8 +120,8 @@ CREATE TABLE flight_instruments (
     manifold_pressure_gauge VARCHAR(255),
     engine_temperature_gauge VARCHAR(255),
     vacuum_gauge VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE brakes (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -142,8 +135,8 @@ CREATE TABLE brakes (
     brake_lines VARCHAR(255),
     brake_pads VARCHAR(255),
     brake_fluid VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE exhaust_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -157,8 +150,8 @@ CREATE TABLE exhaust_system (
     exhaust_system_pressure INT,
     exhaust_system_mounting VARCHAR(255),
     emission_control VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE cooling_system (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -174,8 +167,8 @@ CREATE TABLE cooling_system (
     airflow_management VARCHAR(255),
     cooling_fins VARCHAR(255),
     cooling_system_mounting VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );
 CREATE TABLE powerplant (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -197,6 +190,6 @@ CREATE TABLE powerplant (
     operating_temp INT,
     weights INT,
     maintenance_intervals VARCHAR(255),
-    model_id INT,
-    FOREIGN KEY (model_id) REFERENCES AirplaneModels(model_id) ON DELETE CASCADE
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 );

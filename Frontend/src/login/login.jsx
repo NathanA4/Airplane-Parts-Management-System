@@ -28,6 +28,7 @@ const Login = () => {
 
             console.log('Login successful:', response.data);
             
+            localStorage.setItem('userID', response.data.userId);
             localStorage.setItem('username', response.data.username);
             
             if (response.data.role === 'user') {

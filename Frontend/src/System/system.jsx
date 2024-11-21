@@ -204,6 +204,12 @@ function System() {
     console.log('Serialized Data:', JSON.stringify(serializedData, null, 2));
     console.log('Form Data:', userData);
 
+    const userID = localStorage.getItem('userID');
+    if (!userID) {
+      console.error('No userID found in localStorage');
+      return;
+    }
+    
     setSharedData({ nodes: serializedData.nodes, edges: serializedData.edges, userData});
 
     axios
