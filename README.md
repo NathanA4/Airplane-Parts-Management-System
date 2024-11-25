@@ -25,12 +25,15 @@ The backend is built using **Flask** and provides an API to fetch data for vario
   ```bash
    python3 -m venv venv
    source venv/bin/activate
+   ```
 3. Install the required dependencies:
    ```bash
      pip install -r requirements.txt
+   ```
 4. Run the Flask application:
    ```bash
    flask run
+   ```
 
 ## Frontend Setup
 
