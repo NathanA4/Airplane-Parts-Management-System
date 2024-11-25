@@ -5,7 +5,7 @@ Developed an advanced interface using Flask, MySQL, React, and Tailwind CSS, all
 
 1. [Backend Setup](#backend-setup)
 2. [Frontend Setup](#frontend-setup)
-3. [Running the Project](#running-the-project)
+3. [Project Folder Structure](#project-folder-structure)
 
 ## Backend Setup
 
@@ -23,8 +23,8 @@ The backend is built using **Flask** and provides an API to fetch data for vario
    ```
 2. Python virtual environment to isolate your dependencies:
   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+    python3 -m venv venv
+    source venv/bin/activate
    ```
 3. Install the required dependencies:
    ```bash
@@ -42,7 +42,7 @@ The frontend is built using React, with CSS for styling, and uses Chart.js and R
 ## Navigate to the frontend directory:
   ```bash  
    cd frontend
-
+```
 ### Prerequisites
 - npm
 - 'npm install' for installing dependencies
@@ -58,5 +58,54 @@ import * as XLSX from 'xlsx';
 import { Canvas } from '@react-three/fiber';
 import { useNavigate } from 'react-router-dom';
 import { Environment, OrbitControls } from '@react-three/drei';
-
-
+```
+## Project Folder Structure
+│── Backend/                      
+│   ├── __pycache__/
+│   ├── app.py       
+│   ├── models.py 
+│── Database/   
+│   ├── DB.sql                 
+│── Frontend/              
+│   ├── public/
+│   │ ├── textures/
+│   │   │   └── …
+│   │ ├── Cirrussr22.jsx
+│   │ ├── Lowpoly.jsx
+│   │ ├── cirrussr22.bin
+│   │ ├── cirrussr22.gltf
+│   │ ├── lowpoly.bin
+│   │ ├── lowpoly.gltf
+│   ├── src/
+│   │   ├── Home/
+│   │   │   ├── manu.css
+│   │   │   └── manu.jsx
+│   │   ├── System/
+│   │   │   ├── node.jsx
+│   │   │   ├── partparameters.js
+│   │   │   ├── system.css
+│   │   │   └── system.jsx
+│   │   ├── ViewPlane/
+│   │   │   ├── viewplane.css
+│   │   │   └── viewplane.jsx
+│   │   ├── Assets/
+│   │   │   └── …
+│   │   ├── Login/
+│   │   │   ├── login.css
+│   │   │   ├── login.jsx
+│   │   │   ├── register.css
+│   │   │   └── register.jsx
+│   │   ├──SharedContext.jsx
+│   │   ├──index.css
+│   │   ├──main.ksx
+│   ├── .gitignore
+│   ├── .eslint.config.js
+│   ├── .index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └──vite.config.js 
+├── requirements.txt 
+├── .gitignore    
+└── README.md   
+      
