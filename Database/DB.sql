@@ -6,6 +6,13 @@ CREATE TABLE Users (
     profile VARCHAR(255),
     password VARCHAR(255) NOT NULL
 );
+CREATE TABLE weather_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    city VARCHAR(100) NOT NULL,
+    temperature FLOAT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 CREATE TABLE engine (
     id INT PRIMARY KEY AUTO_INCREMENT,
     engine_type VARCHAR(255),
@@ -193,3 +200,155 @@ CREATE TABLE powerplant (
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+CREATE VIEW UserEngineLandingGearView AS
+SELECT u.id AS UserID,
+    u.name AS UserName,
+    e.engine_type AS EngineType,
+    e.horsepower AS Horsepower,
+    lg.tire_type AS TireType,
+    lg.material AS Material
+FROM Users u
+    JOIN engine e ON u.id = e.user_id
+    JOIN landing_gear lg ON u.id = lg.user_id;
+CREATE VIEW HighHorsepowerUsers AS
+SELECT u.name AS UserName,
+    MAX(e.horsepower) AS MaxHorsepower
+FROM Users u
+    JOIN engine e ON u.id = e.user_id
+GROUP BY u.name
+HAVING MAX(e.horsepower) > ALL (
+        SELECT AVG(e2.horsepower)
+        FROM engine e2
+    );
+CREATE VIEW UserAboveAverageEngines AS
+SELECT u.name AS UserName,
+    e.engine_type AS EngineType,
+    e.horsepower AS Horsepower
+FROM Users u
+    JOIN engine e ON u.id = e.user_id
+WHERE e.horsepower > (
+        SELECT AVG(e2.horsepower)
+        FROM engine e2
+        WHERE e2.user_id = u.id
+    );
+CREATE VIEW UserCockpitAvionicsView AS
+SELECT u.id AS UserID,
+    u.name AS UserName,
+    cc.control_yoke_stick AS ControlStick,
+    cc.flap_controls AS FlapControls,
+    a.gps AS GPS,
+    a.nav_com_radios AS NavigationRadios
+FROM Users u
+    FULL JOIN cockpit_controls cc ON u.id = cc.user_id
+    FULL JOIN avionics a ON u.id = a.user_id;
+CREATE VIEW UsersWithComponents AS
+SELECT DISTINCT u.id AS UserID,
+    u.name AS UserName
+FROM Users u
+WHERE u.id IN (
+        SELECT user_id
+        FROM engine
+    )
+UNION
+SELECT DISTINCT u.id AS UserID,
+    u.name AS UserName
+FROM Users u
+WHERE u.id IN (
+        SELECT user_id
+        FROM landing_gear
+    );
+CREATE VIEW UserPowerplantDetails AS
+SELECT u.name AS UserName,
+    p.engine_model AS EngineModel,
+    p.horsepower AS Horsepower,
+    p.turbocharger AS Turbocharger,
+    p.power_output AS PowerOutput
+FROM Users u
+    JOIN powerplant p ON u.id = p.user_id;
+CREATE VIEW CoolingSystemEfficiency AS
+SELECT u.name AS UserName,
+    AVG(cs.coolant_capacity) AS AverageCoolantCapacity
+FROM Users u
+    JOIN cooling_system cs ON u.id = cs.user_id
+GROUP BY u.name;
+CREATE VIEW HighTorqueEngines AS
+SELECT e.engine_type AS EngineType,
+    e.torque AS Torque
+FROM engine e
+WHERE e.torque > 300;
+CREATE VIEW UserBrakesSummary AS
+SELECT u.name AS UserName,
+    b.brake_type AS BrakeType,
+    b.anti_skid_system AS AntiSkidSystem
+FROM Users u
+    JOIN brakes b ON u.id = b.user_id;
+CREATE VIEW ComprehensiveAvionics AS
+SELECT u.name AS UserName,
+    a.gps AS GPS,
+    a.nav_com_radios AS NavRadios,
+    a.weather_radar AS WeatherRadar,
+    a.autopilot_system AS Autopilot
+FROM Users u
+    JOIN avionics a ON u.id = a.user_id;
+CREATE OR REPLACE VIEW UserCockpitAvionicsView AS
+SELECT u.id AS user_id,
+    u.username,
+    u.role,
+    c.id AS cockpit_control_id,
+    c.control_yoke_stick,
+    c.throttle,
+    c.rudder_pedals,
+    c.trim_controls,
+    c.flap_controls,
+    c.autopilots,
+    c.landing_gear_controls,
+    c.radio_panel,
+    c.instrument_panel,
+    a.id AS avionics_id,
+    a.gps,
+    a.nav_com_radios,
+    a.adf,
+    a.vor,
+    a.dme,
+    a.transponder,
+    a.elt,
+    a.ads_b,
+    a.weather_radar,
+    a.autopilot_system,
+    a.flight_director,
+    a.tcas,
+    a.transponder_mode
+FROM users u
+    LEFT JOIN cockpit_controls c ON u.id = c.user_id
+    LEFT JOIN avionics a ON u.id = a.user_id
+UNION
+SELECT u.id AS user_id,
+    u.username,
+    u.role,
+    c.id AS cockpit_control_id,
+    c.control_yoke_stick,
+    c.throttle,
+    c.rudder_pedals,
+    c.trim_controls,
+    c.flap_controls,
+    c.autopilots,
+    c.landing_gear_controls,
+    c.radio_panel,
+    c.instrument_panel,
+    a.id AS avionics_id,
+    a.gps,
+    a.nav_com_radios,
+    a.adf,
+    a.vor,
+    a.dme,
+    a.transponder,
+    a.elt,
+    a.ads_b,
+    a.weather_radar,
+    a.autopilot_system,
+    a.flight_director,
+    a.tcas,
+    a.transponder_mode
+FROM users u
+    RIGHT JOIN cockpit_controls c ON u.id = c.user_id
+    RIGHT JOIN avionics a ON u.id = a.user_id;

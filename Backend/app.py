@@ -1,11 +1,13 @@
 from flask_cors import CORS
 from flask import Flask, jsonify, request
-from model import db, User, Engine, LandingGear, FuelSystem, CockpitControl, Avionic, ElectricalSystem, FlightInstrument, Brake, ExhaustSystem, CoolingSystem, Powerplant
+from model import WeatherData, db, User, Engine, LandingGear, FuelSystem, CockpitControl, Avionic, ElectricalSystem, FlightInstrument, Brake, ExhaustSystem, CoolingSystem, Powerplant
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from datetime import datetime, timedelta
 import uuid
 import pandas as pd
+import requests 
+from sqlalchemy.sql import text
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -98,6 +100,65 @@ def file_upload():
     except Exception as e:
         print(f"Error during upload: {str(e)}")
         return jsonify({'error': f'Unexpected error: {str(e)}'}), 500
+
+WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather"
+WEATHER_API_KEY = "14820d48f26f136e2da6ed36da9dc80c"
+
+@app.route('/api/weather', methods=['GET'])
+def get_weather():
+    try:
+        city = request.args.get('city')
+        if not city:
+            return jsonify({"error": "City parameter is required"}), 400
+
+        one_hour_ago = datetime.utcnow() - timedelta(hours=1)
+        existing_weather = WeatherData.query.filter(
+            WeatherData.city == city,
+            WeatherData.timestamp >= one_hour_ago
+        ).first()
+
+        if existing_weather:
+            return jsonify({
+                "city": existing_weather.city,
+                "temperature": existing_weather.temperature,
+                "description": existing_weather.description,
+                "cached": True
+            }), 200
+
+        params = {
+            'q': city,
+            'appid': WEATHER_API_KEY,
+            'units': 'metric'
+        }
+        response = requests.get(WEATHER_API_URL, params=params)
+        response.raise_for_status()
+        weather_data = response.json()
+
+        city_name = weather_data['name']
+        temperature = weather_data['main']['temp']
+        weather_description = weather_data['weather'][0]['description']
+
+        new_weather = WeatherData(
+            city=city_name,
+            temperature=temperature,
+            description=weather_description
+        )
+        db.session.add(new_weather)
+        db.session.commit()
+
+        return jsonify({
+            "city": city_name,
+            "temperature": temperature,
+            "description": weather_description,
+            "cached": False
+        }), 200
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "Failed to fetch weather data", "details": str(e)}), 500
+
+    except Exception as e:
+        return jsonify({"error": "An error occurred", "details": str(e)}), 500
+
 
 Airplane_System = []
 
@@ -379,7 +440,115 @@ def retrieve_plane():
         print(f"Error retrieving airplane data: {str(e)}")
         return jsonify({'error': f'Failed to retrieve airplane data: {str(e)}'}), 500
 
+@app.route('/api/coolingsystemefficiency', methods=['GET'])
+def get_user_coolingsystemefficiency():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.coolingsystemefficiency;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
+@app.route('/api/comprehensiveavionics', methods=['GET'])
+def get_user_comprehensiveavionics():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.comprehensiveavionics;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/highhorsepowerusers', methods=['GET'])
+def get_user_highhorsepowerusers():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.highhorsepowerusers;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/hightorqueengines', methods=['GET'])
+def get_user_hightorqueengines():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.hightorqueengines;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/useraboveaverageengines', methods=['GET'])
+def get_user_useraboveaverageengines():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.useraboveaverageengines;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/userbrakessummary', methods=['GET'])
+def get_user_userbrakessummary():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.userbrakessummary;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/usercockpitavionicsview', methods=['GET'])
+def get_user_usercockpitavionicsview():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.usercockpitavionicsview;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/userpowerplantdetails', methods=['GET'])
+def get_user_userpowerplantdetails():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.userpowerplantdetails;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/userenginelandinggearview', methods=['GET'])
+def get_user_userenginelandinggearview():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.userenginelandinggearview;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/userswithcomponents', methods=['GET'])
+def get_user_userswithcomponents():
+    """Query a database view."""
+    try:
+        query = text("SELECT * FROM airplane_system.userswithcomponents;")
+        result = db.session.execute(query).fetchall()
+        data = [dict(row._mapping) for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
