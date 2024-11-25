@@ -20,6 +20,7 @@ The backend is built using **Flask** and provides an API to fetch data for vario
    ```bash
    git clone https://github.com/yourusername/airplane-systems-management
    cd airplane-systems-management
+   ```
 2. Python virtual environment to isolate your dependencies:
   ```bash
    python3 -m venv venv
