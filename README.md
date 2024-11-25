@@ -60,6 +60,8 @@ import { useNavigate } from 'react-router-dom';
 import { Environment, OrbitControls } from '@react-three/drei';
 ```
 ## Project Folder Structure
+
+```bash
 │── Backend/                      
 │   ├── __pycache__/
 │   ├── app.py       
@@ -108,4 +110,5 @@ import { Environment, OrbitControls } from '@react-three/drei';
 ├── requirements.txt 
 ├── .gitignore    
 └── README.md   
-      
+
+```
